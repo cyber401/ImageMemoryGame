@@ -39,6 +39,7 @@ class ImageMemoryAdapter(private val context: Context, private var cardProperty:
     inner class MemoryGameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
         fun bind(position: Int) {
+            Log.i("lalit", position.toString())
             imageButton.setImageResource(imageList[position])
             imageButton.setOnClickListener {
                 Log.d("clicker","$position")
