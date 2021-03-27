@@ -10,9 +10,13 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.min
 
-class ImageMemoryAdapter(private val context: Context, private var cardProperty: MemoryCardProperty, var imageList: List<Int>) : RecyclerView.Adapter<ImageMemoryAdapter.MemoryGameViewHolder>() {
+class ImageMemoryAdapter(private val context: Context, private var cardProperty: MemoryCardProperty,  val imageList: List<MemoryCard>,
+val cardListener:ImageGameListener) : RecyclerView.Adapter<ImageMemoryAdapter.MemoryGameViewHolder>() {
     companion object{
         private const val MARGIN = 10
+    }
+    interface ImageGameListener{
+       fun onClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoryGameViewHolder {
@@ -39,10 +43,20 @@ class ImageMemoryAdapter(private val context: Context, private var cardProperty:
     inner class MemoryGameViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
         fun bind(position: Int) {
-            Log.i("lalit", position.toString())
-            imageButton.setImageResource(imageList[position])
+            imageButton.setImageResource(if(!imageList[position].upSided)
+            {
+                R.drawable.ic_launcher_background
+            }else{
+                imageList[position].identifier
+            })
+
+            /**here we using listener because we don't wanna use logic here for button rather we use
+                in a MainActivity that is a better practise because RecyclerView Adapter work is
+                only pass data between MainActivity to RecyclerView.
+             */
             imageButton.setOnClickListener {
-                Log.d("clicker","$position")
+                cardListener.onClick(position)
+                Log.i("lalit", "adapter position = $position")
             }
 }
 
