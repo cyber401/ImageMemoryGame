@@ -56,7 +56,6 @@ val cardListener:ImageGameListener) : RecyclerView.Adapter<ImageMemoryAdapter.Me
              */
             imageButton.setOnClickListener {
                 cardListener.onClick(position)
-                Log.i("lalit", "adapter position = $position")
             }
 }
 
